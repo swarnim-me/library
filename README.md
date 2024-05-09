@@ -5,6 +5,7 @@
     * Add book details to each book:
         * Name
         * Author
+        * Genre
         * Number of Pages
         * Review (5)
         * Personal opinion
