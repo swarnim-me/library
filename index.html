@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:wght@100;300;400;500;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <main>
+        <nav>
+            <h1 class="app-title">Library</h1>
+            <input type="text" placeholder="Search for books...">
+            <button><img src="./assets/icons/bookmark.svg" alt="bookmark"></button>
+            <button><img src="./assets/icons/sun.svg" alt="light mode"></button>
+            <button><img src="./assets/icons/plus.svg" alt="dark mode"> Add</button>
+        </nav>
+
+        <div class="filter-wrapper">
+            <select name="status">
+                <option value="all">All</option>
+                <option value="want-to-read">Want to read</option>
+                <option value="reading">Reading</option>
+                <option value="read">Read</option>
+            </select>
+            <select name="genre">
+                <option value="all">All</option>
+                <option value="self-help">Self Help</option>
+                <option value="fantasy">Fantasy</option>
+                <option value="mystery">Mystery</option>
+                <option value="action">Action</option>
+                <option value="philosophy">Philosophy</option>
+            </select>
+        </div>
+
+        <div class="book-grid">
+            <div class="book">
+                <img src="./assets/images/default-cover.jpg" alt="book cover">
+                <h3 class="book-title">Book Name</h3>
+                <p class="book-author">By John Doe</p>
+                <p class="book-genre">Mystery</p>
+                <div class="rating">
+                    <img src="./assets/icons/star.svg" alt="star">
+                    <img src="./assets/icons/star.svg" alt="star">
+                    <img src="./assets/icons/star.svg" alt="star">
+                    <img src="./assets/icons/star.svg" alt="star">
+                    <img src="./assets/icons/star.svg" alt="star">
+                </div>
+                <p class="book-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta illum odit
+                    quod delectus voluptas
+                    impedit beatae placeat non explicabo ex!</p>
+                <button class="status-button">Want to read</button>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
