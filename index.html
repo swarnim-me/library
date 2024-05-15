@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/styles.css">
 
     <!-- Google Fonts -->
+    <!-- TODO: Replace Google fonts to use local ones -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -19,32 +20,36 @@
     <main>
         <nav>
             <h1 class="app-title">Library</h1>
-            <input type="text" placeholder="Search for books...">
-            <button><img src="./assets/icons/bookmark.svg" alt="bookmark"></button>
-            <button><img src="./assets/icons/sun.svg" alt="light mode"></button>
-            <button><img src="./assets/icons/plus.svg" alt="dark mode"> Add</button>
+            <input type="text" placeholder="Search for books..." class="search-input">
+            <button class="bookmark-btn"><img src="./assets/icons/bookmark.svg" alt="bookmark"></button>
+            <button class="theme-btn"><img src="./assets/icons/sun.svg" alt="light mode"></button>
+            <button class="add-btn"><img src="./assets/icons/plus.svg" alt="add button">Add Book</button>
         </nav>
 
         <div class="filter-wrapper">
-            <select name="status">
-                <option value="all">All</option>
-                <option value="want-to-read">Want to read</option>
-                <option value="reading">Reading</option>
-                <option value="read">Read</option>
-            </select>
-            <select name="genre">
-                <option value="all">All</option>
-                <option value="self-help">Self Help</option>
-                <option value="fantasy">Fantasy</option>
-                <option value="mystery">Mystery</option>
-                <option value="action">Action</option>
-                <option value="philosophy">Philosophy</option>
-            </select>
+            <div class="status-select-wrapper">
+                <select name="status" class="status-select">
+                    <option value="all">All</option>
+                    <option value="want-to-read">Want to read</option>
+                    <option value="reading">Reading</option>
+                    <option value="read">Read</option>
+                </select>
+            </div>
+            <div class="genre-select-wrapper">
+                <select name="genre" class="genre-select">
+                    <option value="all">All</option>
+                    <option value="self-help">Self Help</option>
+                    <option value="fantasy">Fantasy</option>
+                    <option value="mystery">Mystery</option>
+                    <option value="action">Action</option>
+                    <option value="philosophy">Philosophy</option>
+                </select>
+            </div>
         </div>
 
         <div class="book-grid">
             <div class="book">
-                <img src="./assets/images/default-cover.jpg" alt="book cover">
+                <img src="./assets/images/default-cover.jpg" alt="book cover" class="book-cover">
                 <h3 class="book-title">Book Name</h3>
                 <p class="book-author">By John Doe</p>
                 <p class="book-genre">Mystery</p>

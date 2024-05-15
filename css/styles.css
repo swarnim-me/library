@@ -1,11 +1,151 @@
+:root {
+    font-size: 16px;
+    --primary-clr: #64B5F6;
+    --font-dark-clr: #3D3D3D;
+    --font-light-clr: white;
+    --reading-clr: #AED581;
+    --background-dark: #18212E;
+    --card-bg-dark: #18212E;
+    --card-bg-light: #ECECEC;
+}
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Roboto';
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    padding: 16px 48px;
+    color: var(--font-dark-clr);
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
 }
 
 .app-title {
     font-family: 'Playfair Display';
     font-weight: 500;
     text-transform: uppercase;
+}
+
+nav {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    align-items: center;
+    gap: 40px;
+}
+
+nav .search-input {
+    flex: 1;
+    border: none;
+    background: var(--card-bg-light);
+    font-weight: 300;
+    padding: 16px;
+    border-radius: 8px;
+    outline: 0;
+    font-size: 1rem;
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: var(--font-dark-clr);
+}
+
+
+nav .app-title {
+    font-size: 3rem;
+}
+
+nav .add-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    gap: 16px;
+    padding: 16px 32px;
+    color: var(--font-light-clr);
+    background: var(--primary-clr);
+    border-radius: 8px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.book-cover {
+    /* TODO: Not hard code the height */
+    height: 100px;
+}
+
+.filter-wrapper {
+    display: flex;
+    justify-content: end;
+    gap: 64px;
+}
+
+select {
+    font-size: 1rem;
+    padding: 8px;
+    appearance: none;
+    border: none;
+    outline: none;
+    color: var(--font-dark-clr);
+}
+
+.status-select-wrapper,
+.genre-select-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.status-select-wrapper::before {
+    content: url("../assets/icons/info.svg");
+}
+
+.genre-select-wrapper::before {
+    content: url("../assets/icons/masks.svg");
+}
+
+.status-select-wrapper::after,
+.genre-select-wrapper::after {
+    content: url("../assets/icons/down_arrow.svg");
+}
+
+@media(max-width: 800px) {
+    body {
+        padding: 4px;
+    }
+
+    nav {
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto auto auto;
+        gap: 8px;
+    }
+
+    nav .search-input {
+        padding: 8px;
+        line-height: 1.5;
+        grid-row: 2 / 3;
+        grid-column: 1 / -1;
+    }
+
+    nav .add-btn {
+        padding: 8px;
+        line-height: 1.5;
+        grid-column: 1 / -1;
+    }
+
+    .filter-wrapper {
+        gap: 32px;
+        justify-content: center;
+    }
+
+    .filter-wrapper * {}
 }
