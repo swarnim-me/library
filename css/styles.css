@@ -2,6 +2,7 @@
     font-size: 16px;
     --primary-clr: #64B5F6;
     --font-dark-clr: #3D3D3D;
+    --font-dark-sec-clr: #888888;
     --font-light-clr: white;
     --reading-clr: #AED581;
     --background-dark: #18212E;
@@ -9,15 +10,19 @@
     --card-bg-light: #ECECEC;
 }
 
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     font-family: 'Roboto';
+    /* For debugging */
+    /* outline: 1px solid red; */
 }
 
 body {
     width: 100vw;
+    max-width: 100%;
     min-height: 100vh;
     padding: 16px 48px;
     color: var(--font-dark-clr);
@@ -33,6 +38,7 @@ main {
     font-family: 'Playfair Display';
     font-weight: 500;
     text-transform: uppercase;
+    font-size: 3rem;
 }
 
 nav {
@@ -43,6 +49,7 @@ nav {
 }
 
 nav .search-input {
+    min-width: 0;
     flex: 1;
     border: none;
     background: var(--card-bg-light);
@@ -61,16 +68,17 @@ nav button {
 
 
 nav .app-title {
-    font-size: 3rem;
+    font-size: minmax(100px, 3rem);
 }
 
 nav .add-btn {
+    min-width: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1rem;
-    gap: 16px;
-    padding: 16px 32px;
+    gap: 8px;
+    padding: 12px;
     color: var(--font-light-clr);
     background: var(--primary-clr);
     border-radius: 8px;
@@ -78,15 +86,12 @@ nav .add-btn {
     cursor: pointer;
 }
 
-.book-cover {
-    /* TODO: Not hard code the height */
-    height: 100px;
-}
 
 .filter-wrapper {
     display: flex;
+    flex-wrap: wrap;
     justify-content: end;
-    gap: 64px;
+    gap: 80px;
 }
 
 select {
@@ -94,8 +99,9 @@ select {
     padding: 8px;
     appearance: none;
     border: none;
-    outline: none;
     color: var(--font-dark-clr);
+    outline: none;
+    min-width: 20px;
 }
 
 .status-select-wrapper,
@@ -118,9 +124,75 @@ select {
     content: url("../assets/icons/down_arrow.svg");
 }
 
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 32px;
+}
+
+.book {
+    width: 100%;
+    height: 300px;
+    padding: 16px;
+    background: var(--card-bg-light);
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    column-gap: 24px;
+    grid-template-rows: repeat(5, auto);
+    align-items: center;
+    border-radius: 8px;
+    color: var(--font-dark-sec-clr);
+}
+
+.book-title {
+    font-size: 2rem;
+    color: var(--font-dark-clr);
+}
+
+.book-cover-wrapper {
+    height: 100%;
+    background: url("../assets/images/default-cover.jpg") center no-repeat;
+    background-size: cover;
+    grid-row: 1 / -1;
+    grid-column: 1 / 2;
+    border-radius: 8px;
+}
+
+.book-author {
+    font-size: .8rem;
+    padding-bottom: 8px;
+}
+
+.book-genre {
+    font-weight: 200;
+}
+
+.rating {
+    display: flex;
+    gap: 20px;
+}
+
+.rating * {
+    aspect-ratio: 1 / 1;
+    transform: scale(1.2);
+}
+
+.book-description {
+    font-size: .9rem;
+    font-weight: 300;
+}
+
+.status-button {
+    background: var(--primary-clr);
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    color: white;
+}
+
 @media(max-width: 800px) {
     body {
-        padding: 4px;
+        padding: 8px;
     }
 
     nav {
@@ -143,9 +215,8 @@ select {
     }
 
     .filter-wrapper {
-        gap: 32px;
         justify-content: center;
+        gap: 20px;
     }
 
-    .filter-wrapper * {}
 }
