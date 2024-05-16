@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <link rel="stylesheet" href="./css/styles.css">
 
     <!-- Google Fonts -->
     <!-- TODO: Replace Google fonts to use local ones -->
@@ -15,6 +14,8 @@
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:wght@100;300;400;500;900&display=swap"
         rel="stylesheet">
 
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/add-modal.css">
     <script src="js/script.js" defer></script>
 </head>
 
@@ -155,14 +156,59 @@
                     <img src="./assets/icons/star.svg" alt="star">
                 </div>
                 <p class="book-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ratione
-                    accusamus error consectetur, cum rem.</p>
+                    accusamus error consectetur, cm rem.</p>
                 <button class="status-button">Want to read</button>
             </div>
         </div>
     </main>
 
     <dialog class="add-book-modal">
-        <p>Hey</p>
+        <div class="dialog-content">
+            <h2 class="modal-title"><span class="add-title">Add</span> Book</h2>
+            <form>
+                <div class="form-control">
+                    <label for="book-name-input">Book Name</label>
+                    <input type="text" id="book-name-input" placeholder="Some really cool book">
+                </div>
+                <div class="form-control">
+                    <label for="author-name-input">Author Name</label>
+                    <input type="text" id="author-name-input" placeholder="Nice person">
+                </div>
+                <div class="form-control">
+                    <label for="status-input">Status</label>
+                    <select name="status" id="status-input">
+                        <option value="want-to-read">Want to read</option>
+                        <option value="reading">Reading</option>
+                        <option value="read">Read</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label for="genre-input">Genre</label>
+                    <select name="genre" id="genre-input">
+                        <option value="self-help">Self Help</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="action">Action</option>
+                        <option value="philosophy">Philosophy</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label for="review-input">Review</label>
+                    <textarea name="review" id="review-input"></textarea>
+                </div>
+                <div class="rating-input">
+                    <img src="./assets/icons/star.svg" alt="star">
+                    <img src="./assets/icons/star.svg" alt="star">
+                    <img src="./assets/icons/star.svg" alt="star">
+                    <img src="./assets/icons/star.svg" alt="star">
+                    <img src="./assets/icons/star.svg" alt="star">
+                </div>
+                <div class="form-control-btn">
+                    <button class="cancel-btn">Cancel</button>
+                    <button class="save-btn">Save</button>
+                </div>
+            </form>
+        </div>
     </dialog>
 </body>
 
