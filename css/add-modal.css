@@ -1,9 +1,13 @@
+:root {
+    --filter-star: invert(0);
+}
+
 .add-book-modal {
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: min(100%, 400px);
+    width: min(100%, 600px);
     border: none;
     border-radius: 8px;
 }
@@ -45,15 +49,17 @@ dialog::backdrop {
 
 .add-book-modal input[type="text"],
 .add-book-modal select,
-.add-book-modal textarea {
+.add-book-modal textarea,
+.add-book-modal input[type="url"] {
     font-size: 1.2rem;
     border: none;
     font-weight: 300;
     padding: 8px 0;
+    width: 100%;
     outline: 0;
 }
 
-.add-book-modal input[type="text"]::placeholder {
+.add-book-modal input::placeholder {
     opacity: .5;
 }
 
@@ -68,8 +74,15 @@ dialog::backdrop {
     padding-block: 16px;
 }
 
-.rating-input img {
+.rating-input input {
+    appearance: none;
+}
+
+.rating-input input[type="radio"]::before {
+    content: url("../assets/icons/star.svg");
     transform: scale(1.5);
+    display: inline-block;
+    cursor: pointer;
 }
 
 .form-control-btn {

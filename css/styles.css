@@ -167,7 +167,9 @@ select {
 
 .book-cover-wrapper {
     height: 100%;
-    background: url("../assets/images/default-cover.jpg") center no-repeat;
+    background: url("../assets/images/default-cover.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
     grid-row: 1 / -1;
     grid-column: 1 / 2;
@@ -193,7 +195,7 @@ select {
     transform: scale(1.2);
 }
 
-.book-description {
+.book-review {
     font-size: .9rem;
     font-weight: 300;
 }
@@ -208,6 +210,10 @@ select {
 
 .invert {
     filter: invert(1);
+}
+
+.filter-yellow {
+    filter: brightness(0) saturate(100%) invert(86%) sepia(32%) saturate(3370%) hue-rotate(0deg) brightness(104%) contrast(100%);
 }
 
 .icon {

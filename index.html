@@ -65,7 +65,7 @@
                     <img src="./assets/icons/star.svg" alt="star">
                     <img src="./assets/icons/star.svg" alt="star">
                 </div>
-                <p class="book-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ratione
+                <p class="book-review">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ratione
                     accusamus error consectetur, cum rem.</p>
                 <button class="status-button">Want to read</button>
             </div>
@@ -168,11 +168,15 @@
             <form>
                 <div class="form-control">
                     <label for="book-name-input">Book Name</label>
-                    <input type="text" id="book-name-input" placeholder="Some really cool book">
+                    <input required type="text" id="book-name-input" placeholder="Some really cool book">
                 </div>
                 <div class="form-control">
                     <label for="author-name-input">Author Name</label>
-                    <input type="text" id="author-name-input" placeholder="Nice person">
+                    <input required type="text" id="author-name-input" placeholder="Nice person">
+                </div>
+                <div class="form-control">
+                    <label for="cover-url-input">Book Cover URL</label>
+                    <input type="url" id="cover-url-input" placeholder="https://www.example.com">
                 </div>
                 <div class="form-control">
                     <label for="status-input">Status</label>
@@ -194,18 +198,19 @@
                 </div>
                 <div class="form-control">
                     <label for="review-input">Review</label>
-                    <textarea name="review" id="review-input"></textarea>
+                    <textarea required name="review" id="review-input"
+                        placeholder="I really liked this book!"></textarea>
                 </div>
                 <div class="rating-input">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
+                    <input type="radio" name="rating" value="1">
+                    <input type="radio" name="rating" value="2">
+                    <input type="radio" name="rating" value="3">
+                    <input type="radio" name="rating" value="4">
+                    <input type="radio" name="rating" value="5">
                 </div>
                 <div class="form-control-btn">
                     <button class="cancel-btn">Cancel</button>
-                    <button class="save-btn">Save</button>
+                    <button class="save-btn" type="submit">Save</button>
                 </div>
             </form>
         </div>
