@@ -29,16 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
         newDB.push(newBook);
         console.log(newDB);
         localStorage.setItem("books", JSON.stringify(newDB));
+        renderGrid();
     }
 
     const renderGrid = () => {
+        bookGrid.innerHTML = "";
         const booksData = JSON.parse(localStorage.getItem("books"));
         booksData.forEach(book => {
             const bookEle = document.createElement("div");
             bookEle.classList.add("book");
             const bookCoverEle = document.createElement("div");
             bookCoverEle.classList.add("book-cover-wrapper");
-            bookCoverEle.style.background = book.CoverURL;
+            bookCoverEle.style.backgroundImage = `url(${book.coverURL})`;
             bookEle.appendChild(bookCoverEle);
             const bookTitleEle = document.createElement("h3");
             bookTitleEle.classList.add("book-title");
@@ -47,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             bookInfoEle.classList.add("book-info");
             const bookAuthorEle = document.createElement("div");
             bookAuthorEle.classList.add("book-author");
-            bookAuthorEle.textContent = "By " + book.author;
+            bookAuthorEle.textContent = book.author;
             const bookGenreEle = document.createElement("div");
             bookGenreEle.classList.add("book-genre");
             bookGenreEle.textContent = book.genre;
@@ -59,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 starEle.setAttribute("src", "./assets/icons/star.svg");
                 starEle.setAttribute("alt", "star");
                 if (i < book.rating) {
-                    starEle.classList.add("filter-yellow");
+                    starEle.classList.add("filter-star");
                 }
                 bookRatingEle.appendChild(starEle);
             }
@@ -89,11 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // console.log(selected);
             ratingInput.forEach(star => {
                 if (star.value <= selected) {
-                    // Changing the svg color using filters
-                    star.classList.add("filter-yellow")
+                    star.classList.add("filter-star")
                 }
                 else {
-                    star.style.filter = "none";
+                    star.classList.remove("filter-star");
                 }
             })
         })
