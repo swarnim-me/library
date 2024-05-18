@@ -15,26 +15,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const statusInput = document.querySelector("#status-input");
     const bookCoverURLInput = document.querySelector("#cover-url-input");
     const genreInput = document.querySelector("#genre-input");
+    const ratingInput = Array.from(document.querySelectorAll(".rating-input input[type='radio']"));
     const reviewInput = document.querySelector("#review-input");
     const addBookForm = document.querySelector("form");
-
+    const addTitle = document.querySelector(".add-title");
 
     //Book Details Modal
     const bookDetailsModal = document.querySelector(".book-details-modal");
     const bookDetailsTitle = document.querySelector(".book-details-modal .modal-title");
+    const bookDetailsCover = document.querySelector(".book-details-modal .modal-cover");
     const bookDetailsAuthor = document.querySelector(".book-details-modal .modal-author");
     const bookDetailsGenre = document.querySelector(".book-details-modal .modal-genre");
     const bookDetailsRating = document.querySelector(".book-details-modal .rating");
     const bookDetailsReview = document.querySelector(".book-details-modal .modal-review");
+    const editBtn = document.querySelector(".edit-btn");
 
     let ratingInputValue = 0;
-    const ratingInput = Array.from(document.querySelectorAll(".rating-input input[type='radio']"));
-    let books = [];
+    let isEditing = false;
+    let currentSelectedBook = {};
 
-    if (localStorage.getItem("books")) {
-        books = JSON.parse(localStorage.getItem("books"));
-    }
-    else {
+    if (!localStorage.getItem("books")) {
         localStorage.setItem("books", JSON.stringify([{ "id": 0, "title": "Some Book", "author": "Some person", "coverURL": "./assets/images/default-cover.jpg", "rating": "4", "genre": "Self Help", "status": "Want to read", "review": "Hello, this is nice" }, { "id": 1, "title": "Another one", "author": "Some other person", "coverURL": "./assets/images/default-cover.jpg", "rating": "2", "genre": "Self Help", "status": "Want to read", "review": "ehh, its aight" }]));
     }
 
@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const addStarsToEle = (rating, ele) => {
+        ele.innerHTML = "";
         for (let i = 0; i < 5; i++) {
             const starEle = document.createElement("img");
             starEle.setAttribute("src", "./assets/icons/star.svg");
@@ -116,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
             bookEle.classList.add("book");
             const bookCoverEle = document.createElement("div");
             bookCoverEle.classList.add("book-cover-wrapper");
-            bookCoverEle.style.backgroundImage = `url(${book.coverURL})`;
+            bookCoverEle.style.backgroundImage = `url('${book.coverURL}')`;
             bookEle.appendChild(bookCoverEle);
             const bookTitleEle = document.createElement("h3");
             bookTitleEle.classList.add("book-title");
@@ -152,17 +153,31 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(bookEle.dataset.bookId);
             const activeDB = getBooks();
             const activeBookIndex = getBookIndexById(bookEle.dataset.bookId);
-            const activeBook = activeDB[activeBookIndex];
+            currentSelectedBook = activeDB[activeBookIndex];
             if (activeBookIndex !== -1) {
-                bookDetailsTitle.textContent = activeBook.title;
-                bookDetailsAuthor.textContent = activeBook.author;
-                bookDetailsGenre.textContent = activeBook.genre;
-                bookDetailsReview.textContent = activeBook.review;
-                addStarsToEle(activeBook.rating, bookDetailsRating);
+                bookDetailsTitle.textContent = currentSelectedBook.title;
+                bookDetailsCover.style.backgroundImage = `url(${currentSelectedBook.coverURL})`;
+                bookDetailsAuthor.textContent = currentSelectedBook.author;
+                bookDetailsGenre.textContent = currentSelectedBook.genre;
+                bookDetailsReview.textContent = currentSelectedBook.review;
+                addStarsToEle(currentSelectedBook.rating, bookDetailsRating);
                 bookDetailsModal.showModal();
             }
         })
     }
+
+    editBtn.addEventListener("click", () => {
+        isEditing = true;
+        addTitle.textContent = "Edit";
+        nameInput.value = currentSelectedBook.title;
+        authorInput.value = currentSelectedBook.author;
+        statusInput.value = currentSelectedBook.status;
+        bookCoverURLInput.value = currentSelectedBook.coverURL ?? "";
+        genreInput.value = currentSelectedBook.genre;
+        reviewInput.value = currentSelectedBook.review;
+        addStarsToRatingInput(currentSelectedBook.rating);
+        addBookModal.showModal();
+    })
 
     const resetInputs = () => {
         addBookForm.reset();
@@ -177,23 +192,29 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", () => {
             btn.parentElement.close();
         })
+        resetInputs();
     })
 
-    ratingInput.forEach(rating => {
-        rating.addEventListener("click", () => {
-            const selected = rating.value;
-            ratingInputValue = selected;
-            // console.log(selected);
-            ratingInput.forEach(star => {
-                if (star.value <= selected) {
-                    star.classList.add("filter-star")
-                }
-                else {
-                    star.classList.remove("filter-star");
-                }
+    const addStarsToRatingInput = (ratingCount) => {
+        ratingInput.forEach((star, index) => {
+            if (ratingCount && ratingCount > index) star.classList.add("filter-star");
+        })
+        ratingInput.forEach((rating, index) => {
+            rating.addEventListener("click", () => {
+                const selected = rating.value;
+                ratingInputValue = selected;
+                // console.log(selected);
+                ratingInput.forEach(star => {
+                    if (star.value <= selected) {
+                        star.classList.add("filter-star")
+                    }
+                    else {
+                        star.classList.remove("filter-star");
+                    }
+                })
             })
         })
-    })
+    }
 
     function Book(title, author, coverURL, rating, genre, status, review) {
         this.id = getBooks().length;
@@ -214,14 +235,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         let bookCover = "./assets/images/default-cover.jpg";
         if (bookCoverURLInput.value != "") bookCover = bookCoverURLInput.value;
-        const newBook = new Book(nameInput.value, authorInput.value, bookCover, ratingInputValue, genreInput.value, statusInput.value, reviewInput.value)
-        console.log(newBook);
-        updateBookDB(newBook);
+        let newBook = {};
+        if (Object.keys(currentSelectedBook).length !== 0) {
+            const activeDB = getBooks();
+            activeDB.forEach((book, index) => {
+                if (book.id === currentSelectedBook.id) {
+                    activeDB[index] = {
+                        id: book.id,
+                        title: nameInput.value,
+                        author: authorInput.value,
+                        coverURL: bookCoverURLInput.value,
+                        status: statusInput.value,
+                        genre: genreInput.value,
+                        rating: ratingInputValue === 0 ? book.rating : ratingInputValue,
+                        review: reviewInput.value,
+                    }
+                }
+            })
+            addTitle.textContent = "Add";
+            setBooks(activeDB);
+            currentSelectedBook = {};
+        }
+        else {
+            newBook = new Book(nameInput.value, authorInput.value, bookCover, ratingInputValue, genreInput.value, statusInput.value, reviewInput.value)
+            updateBookDB(newBook);
+        }
         addBookModal.close();
+        bookDetailsModal.close();
+        addTitle.textContent = "Add";
         resetInputs();
     })
 
     addBookBtn.addEventListener("click", () => {
+        addStarsToRatingInput();
         addBookModal.showModal();
     })
 
