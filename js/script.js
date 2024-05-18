@@ -20,7 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
         books = JSON.parse(localStorage.getItem("books"));
     }
     else {
+        localStorage.setItem("books", JSON.stringify([{ "id": 0, "title": "Some Book", "author": "Some person", "coverURL": "./assets/images/default-cover.jpg", "rating": "4", "genre": "Self Help", "status": "Want to read", "review": "Hello, this is nice" }, { "id": 1, "title": "Another one", "author": "Some other person", "coverURL": "./assets/images/default-cover.jpg", "rating": "2", "genre": "Self Help", "status": "Want to read", "review": "ehh, its aight" }]));
+    }
+
+    const getBooks = () => {
+        return JSON.parse(localStorage.getItem("books"));
+    }
+
+    const setBooks = (books) => {
         localStorage.setItem("books", JSON.stringify(books));
+        renderGrid();
     }
 
     const updateBookDB = (newBook) => {
@@ -32,10 +41,41 @@ document.addEventListener("DOMContentLoaded", () => {
         renderGrid();
     }
 
+    const createStatusButton = (book) => {
+        const statusValues = ["Want to read", "Reading", "Read"];
+        const statusButtonEle = document.createElement("button");
+        statusButtonEle.classList.add("status-button");
+        statusButtonEle.textContent = book.status;
+        const wantToReadColor = window.getComputedStyle(document.documentElement).getPropertyValue('--primary-clr');
+        const readingColor = window.getComputedStyle(document.documentElement).getPropertyValue('--reading-clr');
+        const readColor = window.getComputedStyle(document.documentElement).getPropertyValue('--read-clr');
+        switch (book.status) {
+            case statusValues[0]: statusButtonEle.style.background = wantToReadColor; break;
+            case statusValues[1]: statusButtonEle.style.background = readingColor; break;
+            case statusValues[2]: statusButtonEle.style.background = readColor; break;
+        }
+
+        statusButtonEle.addEventListener("click", () => {
+            let currentStatusIndex;
+            statusValues.forEach((status, index) => {
+                if (book.status === status) currentStatusIndex = index;
+            })
+            let activeBooks = getBooks();
+            activeBooks.forEach(activeBook => {
+                if (activeBook.id === book.id) {
+                    const nextIndex = currentStatusIndex + 1 == statusValues.length ? 0 : currentStatusIndex + 1;
+                    activeBook.status = statusValues[nextIndex];
+                }
+            })
+            setBooks(activeBooks);
+        })
+        return statusButtonEle;
+    }
+
     const renderGrid = () => {
         bookGrid.innerHTML = "";
         const booksData = JSON.parse(localStorage.getItem("books"));
-        booksData.forEach(book => {
+        booksData.forEach((book, index) => {
             const bookEle = document.createElement("div");
             bookEle.classList.add("book");
             const bookCoverEle = document.createElement("div");
@@ -67,11 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const bookReviewEle = document.createElement("div");
             bookReviewEle.classList.add("book-review");
-            bookReviewEle.textContent = book.review;
-            const statusButtonEle = document.createElement("button");
-            statusButtonEle.classList.add("status-button");
-            statusButtonEle.textContent = "Want to read";
+            bookReviewEle.textContent = book.review.substring(0, 50);
+            if (book.review.length > 50) bookReviewEle.textContent += "...";
+            const statusButtonEle = createStatusButton(book);
             bookEle.append(bookCoverEle, bookTitleEle, bookInfoEle, bookRatingEle, bookReviewEle, statusButtonEle)
+            bookEle.setAttribute("data-book-id", index);
             bookGrid.appendChild(bookEle);
         })
     }
@@ -80,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addBookForm.reset();
         ratingInputValue = 0;
         ratingInput.forEach(ratingStar => {
-            ratingStar.style.filter = "none";
+            ratingStar.classList.remove("filter-star");
         })
     }
 
@@ -101,6 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     function Book(title, author, coverURL, rating, genre, status, review) {
+        this.id = getBooks().length;
         this.title = title;
         this.author = author;
         this.coverURL = coverURL;
@@ -116,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
             addBookForm.reportValidity();
             return;
         }
-        let bookCover = "./assets/images/defaultCover.jpg";
+        let bookCover = "./assets/images/default-cover.jpg";
         if (bookCoverURLInput.value != "") bookCover = bookCoverURLInput.value;
         const newBook = new Book(nameInput.value, authorInput.value, bookCover, ratingInputValue, genreInput.value, statusInput.value, reviewInput.value)
         console.log(newBook);

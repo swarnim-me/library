@@ -98,6 +98,7 @@ dialog::backdrop {
     color: white;
     border: none;
     background: var(--primary-clr);
+    cursor: pointer;
 }
 
 .form-control-btn .cancel-btn {

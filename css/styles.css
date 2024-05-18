@@ -5,7 +5,8 @@
     --font-clr: #3D3D3D;
     --font-alt-clr: #fff;
     --font-sec-clr: #888888;
-    --reading-clr: #AED581;
+    --read-clr: #AED581;
+    --reading-clr: #f2c83f;
     --card-bg: #ECECEC;
     --filter-value: 0;
     --danger-clr: #F6647E;
@@ -200,11 +201,24 @@ select {
 }
 
 .status-button {
-    background: var(--primary-clr);
     border: none;
     padding: 8px;
     border-radius: 8px;
+    align-self: flex-end;
     color: white;
+    cursor: pointer;
+}
+
+.want-to-read {
+    background: var(--primary-clr);
+}
+
+.reading {
+    background: var(--reading-clr);
+}
+
+.read {
+    background: var(--read-clr);
 }
 
 .invert {
