@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cancelBtn = document.querySelector(".cancel-btn");
     const themeBtn = document.querySelector(".theme-btn");
     const addBookModal = document.querySelector(".add-book-modal");
+    const bookDetailsModal = document.querySelector(".book-details-modal");
     const nameInput = document.querySelector("#book-name-input");
     const authorInput = document.querySelector("#author-name-input");
     const statusInput = document.querySelector("#status-input");
@@ -179,6 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
     themeBtn.addEventListener("click", () => {
         bodyEle.classList.toggle("dark-mode");
     })
-
+    bookDetailsModal.showModal();
     renderGrid();
 })

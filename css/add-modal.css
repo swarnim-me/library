@@ -51,13 +51,31 @@ dialog::backdrop {
 .add-book-modal select,
 .add-book-modal textarea,
 .add-book-modal input[type="url"] {
+    background: transparent;
     font-size: 1.2rem;
     border: none;
     font-weight: 300;
     padding: 8px 0;
     width: 100%;
     outline: 0;
+    color: var(--font-clr);
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--background-clr);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--card-bg);
+}
+
+
 
 .add-book-modal input::placeholder {
     opacity: .5;

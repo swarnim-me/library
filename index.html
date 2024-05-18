@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/add-modal.css">
+    <link rel="stylesheet" href="./css/book-detail-modal.css">
     <script src="js/script.js" defer></script>
 </head>
 
@@ -50,116 +51,7 @@
             </div>
         </div>
 
-        <div class="book-grid">
-            <div class="book">
-                <div class="book-cover-wrapper"></div>
-                <h3 class="book-title">Book Name</h3>
-                <div class="book-info">
-                    <p class="book-author">By John Doe</p>
-                    <p class="book-genre">Mystery</p>
-                </div>
-                <div class="rating">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                </div>
-                <p class="book-review">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ratione
-                    accusamus error consectetur, cum rem.</p>
-                <button class="status-button">Want to read</button>
-            </div>
-            <div class="book">
-                <div class="book-cover-wrapper"></div>
-                <h3 class="book-title">Book Name</h3>
-                <div class="book-info">
-                    <p class="book-author">By John Doe</p>
-                    <p class="book-genre">Mystery</p>
-                </div>
-                <div class="rating">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                </div>
-                <p class="book-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ratione
-                    accusamus error consectetur, cum rem.</p>
-                <button class="status-button">Want to read</button>
-            </div>
-            <div class="book">
-                <div class="book-cover-wrapper"></div>
-                <h3 class="book-title">Book Name</h3>
-                <div class="book-info">
-                    <p class="book-author">By John Doe</p>
-                    <p class="book-genre">Mystery</p>
-                </div>
-                <div class="rating">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                </div>
-                <p class="book-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ratione
-                    accusamus error consectetur, cum rem.</p>
-                <button class="status-button">Want to read</button>
-            </div>
-            <div class="book">
-                <div class="book-cover-wrapper"></div>
-                <h3 class="book-title">Book Name</h3>
-                <div class="book-info">
-                    <p class="book-author">By John Doe</p>
-                    <p class="book-genre">Mystery</p>
-                </div>
-                <div class="rating">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                </div>
-                <p class="book-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ratione
-                    accusamus error consectetur, cum rem.</p>
-                <button class="status-button">Want to read</button>
-            </div>
-            <div class="book">
-                <div class="book-cover-wrapper"></div>
-                <h3 class="book-title">Book Name</h3>
-                <div class="book-info">
-                    <p class="book-author">By John Doe</p>
-                    <p class="book-genre">Mystery</p>
-                </div>
-                <div class="rating">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                </div>
-                <p class="book-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ratione
-                    accusamus error consectetur, cum rem.</p>
-                <button class="status-button">Want to read</button>
-            </div>
-            <div class="book">
-                <div class="book-cover-wrapper"></div>
-                <h3 class="book-title">Book Name</h3>
-                <div class="book-info">
-                    <p class="book-author">By John Doe</p>
-                    <p class="book-genre">Mystery</p>
-                </div>
-                <div class="rating">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                    <img src="./assets/icons/star.svg" alt="star">
-                </div>
-                <p class="book-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ratione
-                    accusamus error consectetur, cm rem.</p>
-                <button class="status-button">Want to read</button>
-            </div>
-        </div>
+        <div class="book-grid"></div>
     </main>
 
     <dialog class="add-book-modal">
@@ -213,6 +105,26 @@
                     <button class="save-btn" type="submit">Save</button>
                 </div>
             </form>
+        </div>
+    </dialog>
+
+    <dialog class="book-details-modal">
+        <div class="modal-cover"></div>
+        <h1 class="modal-title">Book Details</h1>
+        <p class="modal-author">John Doe</p>
+        <div class="modal-utility">
+            <button class="bookmark-btn"><img src="./assets/icons/bookmark.svg" class="icon" alt="bookmark"></button>
+            <button class="edit-btn"><img src="./assets/icons/edit.svg" class="icon" alt="edit button"></button>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet totam temporibus dolore facilis voluptas
+            enim, velit distinctio culpa iusto cum, numquam molestiae modi omnis doloribus debitis dolores nemo at
+            dolorum.</p>
+        <div class="rating">
+            <img src="./assets/icons/star.svg" alt="star">
+            <img src="./assets/icons/star.svg" alt="star">
+            <img src="./assets/icons/star.svg" alt="star">
+            <img src="./assets/icons/star.svg" alt="star">
+            <img src="./assets/icons/star.svg" alt="star">
         </div>
     </dialog>
 </body>
