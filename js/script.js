@@ -1,12 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     const bodyEle = document.querySelector("body");
-    const addBookBtn = document.querySelector(".add-btn");
-    const cancelBtn = document.querySelector(".cancel-btn");
-    const themeBtn = document.querySelector(".theme-btn");
-    const addBookModal = document.querySelector(".add-book-modal");
-    const bookDetailsModal = document.querySelector(".book-details-modal");
-    const detailsCloseBtn = document.querySelector(".book-details-modal .close-btn");
+    const bookGrid = document.querySelector(".book-grid");
+
+    //General
     const closeBtns = Array.from(document.querySelectorAll(".close-btn"));
+    const addBookBtn = document.querySelector(".add-btn");
+    const themeBtn = document.querySelector(".theme-btn");
+
+    // Add Book Inputs
+    const addBookModal = document.querySelector(".add-book-modal");
+    const cancelBtn = document.querySelector(".cancel-btn");
     const nameInput = document.querySelector("#book-name-input");
     const authorInput = document.querySelector("#author-name-input");
     const statusInput = document.querySelector("#status-input");
@@ -14,7 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const genreInput = document.querySelector("#genre-input");
     const reviewInput = document.querySelector("#review-input");
     const addBookForm = document.querySelector("form");
-    const bookGrid = document.querySelector(".book-grid");
+
+
+    //Book Details Modal
+    const bookDetailsModal = document.querySelector(".book-details-modal");
+    const bookDetailsTitle = document.querySelector(".book-details-modal .modal-title");
+    const bookDetailsAuthor = document.querySelector(".book-details-modal .modal-author");
+    const bookDetailsGenre = document.querySelector(".book-details-modal .modal-genre");
+    const bookDetailsRating = document.querySelector(".book-details-modal .rating");
+    const bookDetailsReview = document.querySelector(".book-details-modal .modal-review");
+
     let ratingInputValue = 0;
     const ratingInput = Array.from(document.querySelectorAll(".rating-input input[type='radio']"));
     let books = [];
@@ -28,6 +40,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const getBooks = () => {
         return JSON.parse(localStorage.getItem("books"));
+    }
+
+    const getBookIndexById = (id) => {
+        const activeDB = getBooks();
+        for (let i = 0; i < activeDB.length; i++) {
+            if (activeDB[i].id === Number(id)) return i;
+        }
+        return -1;
     }
 
     const setBooks = (books) => {
@@ -76,6 +96,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return statusButtonEle;
     }
 
+    const addStarsToEle = (rating, ele) => {
+        for (let i = 0; i < 5; i++) {
+            const starEle = document.createElement("img");
+            starEle.setAttribute("src", "./assets/icons/star.svg");
+            starEle.setAttribute("alt", "star");
+            if (i < rating) {
+                starEle.classList.add("filter-star");
+            }
+            ele.appendChild(starEle);
+        }
+    }
+
     const renderGrid = () => {
         bookGrid.innerHTML = "";
         const booksData = JSON.parse(localStorage.getItem("books"));
@@ -100,15 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
             bookInfoEle.append(bookAuthorEle, bookGenreEle);
             const bookRatingEle = document.createElement("div");
             bookRatingEle.classList.add("rating");
-            for (let i = 0; i < 5; i++) {
-                const starEle = document.createElement("img");
-                starEle.setAttribute("src", "./assets/icons/star.svg");
-                starEle.setAttribute("alt", "star");
-                if (i < book.rating) {
-                    starEle.classList.add("filter-star");
-                }
-                bookRatingEle.appendChild(starEle);
-            }
+            addStarsToEle(book.rating, bookRatingEle);
             const bookReviewEle = document.createElement("div");
             bookReviewEle.classList.add("book-review");
             bookReviewEle.textContent = book.review.substring(0, 50);
@@ -117,10 +141,26 @@ document.addEventListener("DOMContentLoaded", () => {
             bookEle.append(bookCoverEle, bookTitleEle, bookInfoEle, bookRatingEle, bookReviewEle, statusButtonEle)
             bookEle.setAttribute("data-book-id", index);
 
-            bookEle.addEventListener("click", () => {
-                bookDetailsModal.showModal();
-            })
+            addBookListener(bookEle);
+
             bookGrid.appendChild(bookEle);
+        })
+    }
+
+    const addBookListener = (bookEle) => {
+        bookEle.addEventListener("click", () => {
+            console.log(bookEle.dataset.bookId);
+            const activeDB = getBooks();
+            const activeBookIndex = getBookIndexById(bookEle.dataset.bookId);
+            const activeBook = activeDB[activeBookIndex];
+            if (activeBookIndex !== -1) {
+                bookDetailsTitle.textContent = activeBook.title;
+                bookDetailsAuthor.textContent = activeBook.author;
+                bookDetailsGenre.textContent = activeBook.genre;
+                bookDetailsReview.textContent = activeBook.review;
+                addStarsToEle(activeBook.rating, bookDetailsRating);
+                bookDetailsModal.showModal();
+            }
         })
     }
 
