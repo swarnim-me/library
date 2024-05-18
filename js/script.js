@@ -58,7 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
             case statusValues[2]: statusButtonEle.style.background = readColor; break;
         }
 
-        statusButtonEle.addEventListener("click", () => {
+        statusButtonEle.addEventListener("click", (event) => {
+            event.stopPropagation();
             let currentStatusIndex;
             statusValues.forEach((status, index) => {
                 if (book.status === status) currentStatusIndex = index;
