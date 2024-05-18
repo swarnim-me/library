@@ -1,7 +1,69 @@
 .book-details-modal {
     position: fixed;
-    top: 0;
-    right: 0;
-    width: 300px;
+    margin-left: auto;
+    width: 400px;
     height: 100vh;
+    max-height: 100vh;
+    border: none;
+    background: var(--background-clr);
+    padding: 48px;
+    color: var(--font-clr);
+}
+
+.details-dialog-content {
+    width: 100%;
+    display: grid;
+    gap: 28px;
+    text-align: center;
+}
+
+.book-details-modal .modal-cover {
+    background-image: url("../assets/images/default-cover.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 50vh;
+    border-radius: 8px;
+}
+
+.book-details-modal h3 {
+    font-size: 2.5rem;
+}
+
+.book-details-modal .rating {
+    justify-content: center;
+}
+
+.modal-utility {
+    display: flex;
+    justify-content: center;
+    gap: 64px;
+}
+
+.modal-utility button {
+    background: var(--card-bg);
+    padding: 12px;
+    border-radius: 100%;
+    outline: none;
+    border: none;
+}
+
+.book-details-modal .book-info {
+    display: grid;
+    gap: 12px;
+}
+
+.modal-utility button img {
+    transform: scale(1);
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
 }

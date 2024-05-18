@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const themeBtn = document.querySelector(".theme-btn");
     const addBookModal = document.querySelector(".add-book-modal");
     const bookDetailsModal = document.querySelector(".book-details-modal");
+    const detailsCloseBtn = document.querySelector(".book-details-modal .close-btn");
+    const closeBtns = Array.from(document.querySelectorAll(".close-btn"));
     const nameInput = document.querySelector("#book-name-input");
     const authorInput = document.querySelector("#author-name-input");
     const statusInput = document.querySelector("#status-input");
@@ -113,6 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const statusButtonEle = createStatusButton(book);
             bookEle.append(bookCoverEle, bookTitleEle, bookInfoEle, bookRatingEle, bookReviewEle, statusButtonEle)
             bookEle.setAttribute("data-book-id", index);
+
+            bookEle.addEventListener("click", () => {
+                bookDetailsModal.showModal();
+            })
             bookGrid.appendChild(bookEle);
         })
     }
@@ -124,6 +130,13 @@ document.addEventListener("DOMContentLoaded", () => {
             ratingStar.classList.remove("filter-star");
         })
     }
+
+
+    closeBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            btn.parentElement.close();
+        })
+    })
 
     ratingInput.forEach(rating => {
         rating.addEventListener("click", () => {
@@ -180,6 +193,5 @@ document.addEventListener("DOMContentLoaded", () => {
     themeBtn.addEventListener("click", () => {
         bodyEle.classList.toggle("dark-mode");
     })
-    bookDetailsModal.showModal();
     renderGrid();
 })
