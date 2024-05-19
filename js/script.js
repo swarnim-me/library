@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const bookmarkBtn = document.querySelector(".bookmark-btn");
     const statusSelect = document.querySelector(".status-select");
     const genreSelect = document.querySelector(".genre-select");
+    const searchInput = document.querySelector(".search-input");
 
     // Add Book Inputs
     const addBookModal = document.querySelector(".add-book-modal");
@@ -437,4 +438,22 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     renderGrid();
+
+    searchInput.addEventListener("keyup", (event) => {
+        console.log(event.target.value);
+        const searchValue = event.target.value;
+        if (searchValue.length === 0) {
+            renderGrid();
+        }
+        else if (searchValue.length >= 2) {
+            const activeDB = getBooks();
+            const renderItems = []
+            activeDB.forEach(book => {
+                if (book.title.toLowerCase().startsWith(searchValue.toLowerCase())) {
+                    renderItems.push(book);
+                }
+            })
+            renderGrid(renderItems);
+        }
+    })
 })
