@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeBtns = Array.from(document.querySelectorAll(".close-btn"));
     const addBookBtn = document.querySelector(".add-btn");
     const themeBtn = document.querySelector(".theme-btn");
+    const bookmarkBtn = document.querySelector(".bookmark-btn");
 
     // Add Book Inputs
     const addBookModal = document.querySelector(".add-book-modal");
@@ -28,10 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const bookDetailsGenre = document.querySelector(".book-details-modal .modal-genre");
     const bookDetailsRating = document.querySelector(".book-details-modal .rating");
     const bookDetailsReview = document.querySelector(".book-details-modal .modal-review");
+    const bookDetailSaveBtn = document.querySelector(".book-details-modal .bookmark-btn");
     const editBtn = document.querySelector(".edit-btn");
 
     let ratingInputValue = 0;
-    let isEditing = false;
+    let isDarkModeOn = false;
     let currentSelectedBook = {};
 
     if (!localStorage.getItem("books")) {
@@ -42,8 +44,20 @@ document.addEventListener("DOMContentLoaded", () => {
         return JSON.parse(localStorage.getItem("books"));
     }
 
+    const getSavedBooks = () => {
+        return JSON.parse(localStorage.getItem("saved-books"));
+    }
+
     const getBookIndexById = (id) => {
         const activeDB = getBooks();
+        for (let i = 0; i < activeDB.length; i++) {
+            if (activeDB[i].id === Number(id)) return i;
+        }
+        return -1;
+    }
+
+    const getSavedBookIndexById = (id) => {
+        const activeDB = getSavedBooks();
         for (let i = 0; i < activeDB.length; i++) {
             if (activeDB[i].id === Number(id)) return i;
         }
@@ -53,6 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const setBooks = (books) => {
         localStorage.setItem("books", JSON.stringify(books));
         renderGrid();
+    }
+
+    const setSavedBooks = (books) => {
+        localStorage.setItem("saved-books", JSON.stringify(books));
     }
 
     const updateBookDB = (newBook) => {
@@ -161,6 +179,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 bookDetailsGenre.textContent = currentSelectedBook.genre;
                 bookDetailsReview.textContent = currentSelectedBook.review;
                 addStarsToEle(currentSelectedBook.rating, bookDetailsRating);
+                const activeSavedBooksDB = getSavedBooks();
+                for (let i = 0; i < activeSavedBooksDB.length; i++) {
+                    if (activeSavedBooksDB[i].id === currentSelectedBook.id) {
+                        bookDetailSaveBtn.children[0].setAttribute("src", "./assets/icons/bookmark_filled.svg");
+                        break;
+                    }
+                    else {
+                        bookDetailSaveBtn.children[0].setAttribute("src", "./assets/icons/bookmark.svg");
+                    }
+                }
                 bookDetailsModal.showModal();
             }
         })
@@ -278,7 +306,50 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     themeBtn.addEventListener("click", () => {
+        if (!isDarkModeOn) {
+            isDarkModeOn = true;
+            themeBtn.children[0].setAttribute("src", "./assets/icons/moon.svg");
+        }
+        else {
+            isDarkModeOn = false;
+            themeBtn.children[0].setAttribute("src", "./assets/icons/sun.svg");
+        }
         bodyEle.classList.toggle("dark-mode");
+    })
+
+    bookmarkBtn.addEventListener("click", () => {
+        const currentSRC = bookmarkBtn.children[0].getAttribute("src");
+        if (currentSRC === "./assets/icons/bookmark.svg") {
+            bookmarkBtn.children[0].setAttribute("src", "./assets/icons/bookmark_filled.svg");
+        }
+        else {
+            bookmarkBtn.children[0].setAttribute("src", "./assets/icons/bookmark.svg");
+        }
+    })
+
+    bookDetailSaveBtn.addEventListener("click", () => {
+        const currentSRC = bookDetailSaveBtn.children[0].getAttribute("src");
+        if (currentSRC === "./assets/icons/bookmark.svg") {
+            bookDetailSaveBtn.children[0].setAttribute("src", "./assets/icons/bookmark_filled.svg");
+        }
+        else {
+            bookDetailSaveBtn.children[0].setAttribute("src", "./assets/icons/bookmark.svg");
+        }
+
+        if (!localStorage.getItem("saved-books") || getSavedBooks().length == 0) {
+            localStorage.setItem("saved-books", JSON.stringify([currentSelectedBook]));
+        }
+        else {
+            const currentBookIndex = getSavedBookIndexById(currentSelectedBook.id);
+            const activeSavedBooksDB = getSavedBooks();
+            if (currentBookIndex != -1) {
+                activeSavedBooksDB.splice(currentBookIndex, 1);
+            }
+            else {
+                activeSavedBooksDB.push(currentSelectedBook);
+            }
+            setSavedBooks(activeSavedBooksDB);
+        }
     })
     renderGrid();
 })
