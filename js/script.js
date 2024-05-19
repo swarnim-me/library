@@ -31,6 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const bookDetailsReview = document.querySelector(".book-details-modal .modal-review");
     const bookDetailSaveBtn = document.querySelector(".book-details-modal .bookmark-btn");
     const editBtn = document.querySelector(".edit-btn");
+    const deleteBtn = document.querySelector(".delete-btn");
+
+    //Confirm Modal
+    const confirmModal = document.querySelector(".confirm-modal");
+    const confirmTrueBtn = document.querySelector(".confirm-btns button:nth-child(2)")
+    const confirmFalseBtn = document.querySelector(".confirm-btns button:nth-child(1)")
 
     let ratingInputValue = 0;
     let isDarkModeOn = false;
@@ -155,7 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
             bookEle.classList.add("book");
             const bookCoverEle = document.createElement("div");
             bookCoverEle.classList.add("book-cover-wrapper");
-            bookCoverEle.style.backgroundImage = `url('${book.coverURL}')`;
+            if (book.coverURL != "")
+                bookCoverEle.style.backgroundImage = `url('${book.coverURL}')`;
+            else
+                bookCoverEle.style.backgroundImage = `url('./assets/images/default-cover.jpg')`;
             bookEle.appendChild(bookCoverEle);
             const bookTitleEle = document.createElement("h3");
             bookTitleEle.classList.add("book-title");
@@ -178,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (book.review.length > 50) bookReviewEle.textContent += "...";
             const statusButtonEle = createStatusButton(book);
             bookEle.append(bookCoverEle, bookTitleEle, bookInfoEle, bookRatingEle, bookReviewEle, statusButtonEle)
-            bookEle.setAttribute("data-book-id", index);
+            bookEle.setAttribute("data-book-id", book.id);
 
             addBookListener(bookEle);
 
@@ -192,9 +201,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const activeDB = getBooks();
             const activeBookIndex = getBookIndexById(bookEle.dataset.bookId);
             currentSelectedBook = activeDB[activeBookIndex];
+            let bookCover = currentSelectedBook.coverURL;
+            if (bookCover === "") bookCover = "./assets/images/default-cover.jpg";
             if (activeBookIndex !== -1) {
                 bookDetailsTitle.textContent = currentSelectedBook.title;
-                bookDetailsCover.style.backgroundImage = `url(${currentSelectedBook.coverURL})`;
+                bookDetailsCover.style.backgroundImage = `url(${bookCover})`;
                 bookDetailsAuthor.textContent = currentSelectedBook.author;
                 bookDetailsGenre.textContent = currentSelectedBook.genre;
                 bookDetailsReview.textContent = currentSelectedBook.review;
@@ -281,8 +292,10 @@ document.addEventListener("DOMContentLoaded", () => {
             addBookForm.reportValidity();
             return;
         }
-        let bookCover = "./assets/images/default-cover.jpg";
-        if (bookCoverURLInput.value != "") bookCover = bookCoverURLInput.value;
+        let bookCover = "";
+        if (bookCoverURLInput.value != "") {
+            bookCover = bookCoverURLInput.value;
+        }
         let newBook = {};
         if (Object.keys(currentSelectedBook).length !== 0) {
             const activeDB = getBooks();
@@ -373,5 +386,24 @@ document.addEventListener("DOMContentLoaded", () => {
             setSavedBooks(activeSavedBooksIdDB);
         }
     })
+
+    deleteBtn.addEventListener("click", () => {
+        confirmModal.showModal();
+    })
+
+    confirmFalseBtn.addEventListener("click", () => {
+        confirmModal.close();
+    })
+
+    confirmTrueBtn.addEventListener("click", () => {
+        const activeDB = getBooks();
+        const newDB = activeDB.filter((books) => {
+            return books.id != currentSelectedBook.id;
+        })
+        setBooks(newDB);
+        bookDetailsModal.close();
+        confirmModal.close();
+    })
+
     renderGrid();
 })

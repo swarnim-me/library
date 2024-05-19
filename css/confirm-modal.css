@@ -1,0 +1,42 @@
+.confirm-modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 32px;
+    background-color: var(--card-bg);
+    border: none;
+    border-radius: 8px;
+}
+
+.confirm-modal-content {
+    display: grid;
+    gap: 24px;
+}
+
+.confirm-modal h3 {
+    font-size: 1.5rem;
+    color: var(--font-clr);
+}
+
+.confirm-modal .confirm-btns {
+    display: flex;
+    justify-content: end;
+    gap: 24px;
+}
+
+.confirm-btns button {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.confirm-btns button:nth-child(1) {
+    background-color: var(--danger-clr);
+}
+
+.confirm-btns button:nth-child(2) {
+    background-color: var(--primary-clr);
+}
