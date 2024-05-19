@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const statusSelect = document.querySelector(".status-select");
     const genreSelect = document.querySelector(".genre-select");
     const searchInput = document.querySelector(".search-input");
+    const quoteBlock = document.querySelector(".empty-grid-quote");
 
     // Add Book Inputs
     const addBookModal = document.querySelector(".add-book-modal");
@@ -46,15 +47,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSelectedBook = {};
 
     if (!localStorage.getItem("books")) {
-        localStorage.setItem("books", JSON.stringify([{ "id": 0, "title": "Some Book", "author": "Some person", "coverURL": "./assets/images/default-cover.jpg", "rating": "4", "genre": "Self Help", "status": "Want to read", "review": "Hello, this is nice" }, { "id": 1, "title": "Another one", "author": "Some other person", "coverURL": "./assets/images/default-cover.jpg", "rating": "2", "genre": "Self Help", "status": "Want to read", "review": "ehh, its aight" }]));
+        // localStorage.setItem("books", JSON.stringify([{ "id": 0, "title": "Some Book", "author": "Some person", "coverURL": "./assets/images/default-cover.jpg", "rating": "4", "genre": "Self Help", "status": "Want to read", "review": "Hello, this is nice" }, { "id": 1, "title": "Another one", "author": "Some other person", "coverURL": "./assets/images/default-cover.jpg", "rating": "2", "genre": "Self Help", "status": "Want to read", "review": "ehh, its aight" }]));
+        localStorage.setItem("books", []);
     }
     else {
         filteredBooks = localStorage.getItem("books");
     }
 
     const getBooks = () => {
-        if (!JSON.parse(localStorage.getItem("books"))) return [];
-        return JSON.parse(localStorage.getItem("books"));
+        const books = localStorage.getItem("books");
+        return books ? JSON.parse(books) : [];
     }
 
     const getSavedBooksId = () => {
@@ -102,12 +104,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const updateBookDB = (newBook) => {
-        console.log(JSON.parse(localStorage.getItem("books")));
-        const newDB = JSON.parse(localStorage.getItem("books"));
+        const newDB = getBooks();
         newDB.push(newBook);
         console.log(newDB);
         localStorage.setItem("books", JSON.stringify(newDB));
         renderGrid();
+    }
+
+    const renderQuote = () => {
+        if (getBooks().length > 0) quoteBlock.style.display = "none";
+        else quoteBlock.style.display = "block";
     }
 
     const createStatusButton = (book) => {
@@ -156,11 +162,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const renderGrid = (books) => {
+        renderQuote();
         bookGrid.innerHTML = "";
         let booksData;
         if (books) booksData = books;
         else {
-            booksData = JSON.parse(localStorage.getItem("books"));
+            booksData = getBooks();
         }
         booksData.forEach((book, index) => {
             const bookEle = document.createElement("div");

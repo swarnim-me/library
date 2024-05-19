@@ -233,6 +233,28 @@ select {
     filter: invert(var(--filter-value));
 }
 
+
+.empty-grid-quote {
+    flex: 1;
+    color: var(--font-clr);
+    text-align: center;
+    opacity: .6;
+    padding-top: 48px;
+}
+
+.empty-grid-quote h3 {
+    font-size: clamp(2rem, 3rem, 6vw);
+    font-weight: 200;
+    padding-bottom: 48px;
+}
+
+.empty-grid-quote h2 {
+    font-size: 2rem;
+    font-weight: 200;
+}
+
+
+
 @media(max-width: 800px) {
     body {
         padding: 8px;
