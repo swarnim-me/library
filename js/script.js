@@ -414,6 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return books.id != currentSelectedBook.id;
         })
         setBooks(newDB);
+        currentSelectedBook = {};
         bookDetailsModal.close();
         confirmModal.close();
     })
