@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const addBookBtn = document.querySelector(".add-btn");
     const themeBtn = document.querySelector(".theme-btn");
     const bookmarkBtn = document.querySelector(".bookmark-btn");
+    const statusSelect = document.querySelector(".status-select");
+    const genreSelect = document.querySelector(".genre-select");
 
     // Add Book Inputs
     const addBookModal = document.querySelector(".add-book-modal");
@@ -44,6 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!localStorage.getItem("books")) {
         localStorage.setItem("books", JSON.stringify([{ "id": 0, "title": "Some Book", "author": "Some person", "coverURL": "./assets/images/default-cover.jpg", "rating": "4", "genre": "Self Help", "status": "Want to read", "review": "Hello, this is nice" }, { "id": 1, "title": "Another one", "author": "Some other person", "coverURL": "./assets/images/default-cover.jpg", "rating": "2", "genre": "Self Help", "status": "Want to read", "review": "ehh, its aight" }]));
+    }
+    else {
+        filteredBooks = localStorage.getItem("books");
     }
 
     const getBooks = () => {
@@ -403,6 +408,32 @@ document.addEventListener("DOMContentLoaded", () => {
         setBooks(newDB);
         bookDetailsModal.close();
         confirmModal.close();
+    })
+
+    statusSelect.addEventListener("change", (event) => {
+        genreSelect.value = "All";
+        const activeDB = getBooks();
+        if (event.target.value === "All") {
+            renderGrid();
+            return;
+        }
+        const filteredBooks = activeDB.filter((book) => {
+            return book.status === event.target.value;
+        })
+        renderGrid(filteredBooks);
+    })
+
+    genreSelect.addEventListener("change", (event) => {
+        statusSelect.value = "All";
+        const activeDB = getBooks();
+        if (event.target.value === "All") {
+            renderGrid();
+            return;
+        }
+        const filteredBooks = activeDB.filter((book) => {
+            return book.genre === event.target.value;
+        })
+        renderGrid(filteredBooks);
     })
 
     renderGrid();
