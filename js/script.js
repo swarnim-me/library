@@ -127,9 +127,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    const renderGrid = () => {
+    const renderGrid = (books) => {
         bookGrid.innerHTML = "";
-        const booksData = JSON.parse(localStorage.getItem("books"));
+        let booksData;
+        if (books) booksData = books;
+        else {
+            booksData = JSON.parse(localStorage.getItem("books"));
+        }
         booksData.forEach((book, index) => {
             const bookEle = document.createElement("div");
             bookEle.classList.add("book");
@@ -321,9 +325,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentSRC = bookmarkBtn.children[0].getAttribute("src");
         if (currentSRC === "./assets/icons/bookmark.svg") {
             bookmarkBtn.children[0].setAttribute("src", "./assets/icons/bookmark_filled.svg");
+            renderGrid(getSavedBooks());
         }
         else {
             bookmarkBtn.children[0].setAttribute("src", "./assets/icons/bookmark.svg");
+            renderGrid();
         }
     })
 
