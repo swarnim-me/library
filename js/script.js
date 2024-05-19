@@ -41,11 +41,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const getBooks = () => {
+        if (!JSON.parse(localStorage.getItem("books"))) return [];
         return JSON.parse(localStorage.getItem("books"));
     }
 
-    const getSavedBooks = () => {
+    const getSavedBooksId = () => {
+        if (!JSON.parse(localStorage.getItem("saved-books"))) return [];
         return JSON.parse(localStorage.getItem("saved-books"));
+    }
+
+    const getSavedBooks = () => {
+        const savedBooks = [];
+        const activeDB = getBooks();
+        const savedBooksId = getSavedBooksId();
+        for (let i = 0; i < activeDB.length; i++) {
+            for (let j = 0; j < savedBooksId.length; j++) {
+                if (savedBooksId[j] === activeDB[i].id) {
+                    savedBooks.push(activeDB[i]);
+                }
+            }
+        }
+        return savedBooks;
     }
 
     const getBookIndexById = (id) => {
@@ -57,9 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const getSavedBookIndexById = (id) => {
-        const activeDB = getSavedBooks();
+        const activeDB = getSavedBooksId();
         for (let i = 0; i < activeDB.length; i++) {
-            if (activeDB[i].id === Number(id)) return i;
+            if (activeDB[i] === Number(id)) return i;
         }
         return -1;
     }
@@ -342,19 +358,19 @@ document.addEventListener("DOMContentLoaded", () => {
             bookDetailSaveBtn.children[0].setAttribute("src", "./assets/icons/bookmark.svg");
         }
 
-        if (!localStorage.getItem("saved-books") || getSavedBooks().length == 0) {
-            localStorage.setItem("saved-books", JSON.stringify([currentSelectedBook]));
+        if (!localStorage.getItem("saved-books") || getSavedBooksId().length == 0) {
+            localStorage.setItem("saved-books", JSON.stringify([currentSelectedBook.id]));
         }
         else {
             const currentBookIndex = getSavedBookIndexById(currentSelectedBook.id);
-            const activeSavedBooksDB = getSavedBooks();
+            const activeSavedBooksIdDB = getSavedBooksId();
             if (currentBookIndex != -1) {
-                activeSavedBooksDB.splice(currentBookIndex, 1);
+                activeSavedBooksIdDB.splice(currentBookIndex, 1);
             }
             else {
-                activeSavedBooksDB.push(currentSelectedBook);
+                activeSavedBooksIdDB.push(currentSelectedBook.id);
             }
-            setSavedBooks(activeSavedBooksDB);
+            setSavedBooks(activeSavedBooksIdDB);
         }
     })
     renderGrid();
