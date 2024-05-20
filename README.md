@@ -1,3 +1,5 @@
+[Live Demo](https://swarnim-me.github.io/library/)
+
 ### Acceptance Criteria
 
 * The user should be able to:
@@ -15,3 +17,4 @@
     * Filter books according to the status of completion and genre.
     * Modify the status (To read, reading, read) from the home screen.
     * Toggle between light mode and dark mode.
+
