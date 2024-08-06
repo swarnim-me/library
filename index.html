@@ -1,151 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Library</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library</title>
+		<!-- Google Fonts -->
+		<!-- TODO: Replace Google fonts to use local ones -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:wght@100;300;400;500;900&display=swap"
+			rel="stylesheet"
+		/>
 
-    <!-- Google Fonts -->
-    <!-- TODO: Replace Google fonts to use local ones -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:wght@100;300;400;500;900&display=swap"
-        rel="stylesheet">
+		<link rel="stylesheet" href="./css/styles.css" />
+		<link rel="stylesheet" href="./css/add-modal.css" />
+		<link rel="stylesheet" href="./css/book-detail-modal.css" />
+		<link rel="stylesheet" href="./css/confirm-modal.css" />
+		<script src="js/script.js" defer></script>
+	</head>
 
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="./css/add-modal.css">
-    <link rel="stylesheet" href="./css/book-detail-modal.css">
-    <link rel="stylesheet" href="./css/confirm-modal.css">
-    <script src="js/script.js" defer></script>
-</head>
+	<body>
+		<main>
+			<nav>
+				<h1 class="app-title">Library</h1>
+				<input
+					type="text"
+					placeholder="Search for books..."
+					class="search-input"
+				/>
+				<button class="bookmark-btn">
+					<img
+						src="./assets/icons/bookmark.svg"
+						class="icon"
+						alt="bookmark"
+					/>
+				</button>
+				<button class="theme-btn">
+					<img
+						src="./assets/icons/sun.svg"
+						class="icon"
+						alt="light mode"
+					/>
+				</button>
+				<button class="add-btn">
+					<img
+						src="./assets/icons/plus.svg"
+						class=""
+						alt="add button"
+					/>Add Book
+				</button>
+			</nav>
 
-<body>
-    <main>
-        <nav>
-            <h1 class="app-title">Library</h1>
-            <input type="text" placeholder="Search for books..." class="search-input">
-            <button class="bookmark-btn"><img src="./assets/icons/bookmark.svg" class="icon" alt="bookmark"></button>
-            <button class="theme-btn"><img src="./assets/icons/sun.svg" class="icon" alt="light mode"></button>
-            <button class="add-btn"><img src="./assets/icons/plus.svg" class="" alt="add button">Add Book</button>
-        </nav>
+			<div class="filter-wrapper">
+				<div class="status-select-wrapper">
+					<select name="status" class="status-select">
+						<option value="All">All</option>
+						<option value="Want to read">Want to read</option>
+						<option value="Reading">Reading</option>
+						<option value="Read">Read</option>
+					</select>
+				</div>
+				<div class="genre-select-wrapper">
+					<select name="genre" class="genre-select">
+						<option value="All">All</option>
+						<option value="Self Help">Self Help</option>
+						<option value="Fantasy">Fantasy</option>
+						<option value="Mystery">Mystery</option>
+						<option value="Action">Action</option>
+						<option value="Philosophy">Philosophy</option>
+					</select>
+				</div>
+			</div>
 
-        <div class="filter-wrapper">
-            <div class="status-select-wrapper">
-                <select name="status" class="status-select">
-                    <option value="All">All</option>
-                    <option value="Want to read">Want to read</option>
-                    <option value="Reading">Reading</option>
-                    <option value="Read">Read</option>
-                </select>
-            </div>
-            <div class="genre-select-wrapper">
-                <select name="genre" class="genre-select">
-                    <option value="All">All</option>
-                    <option value="Self Help">Self Help</option>
-                    <option value="Fantasy">Fantasy</option>
-                    <option value="Mystery">Mystery</option>
-                    <option value="Action">Action</option>
-                    <option value="Philosophy">Philosophy</option>
-                </select>
-            </div>
-        </div>
+			<div class="empty-grid-quote">
+				<h3>
+					"Reading gives us someplace to go when<br />we have to stay
+					where we are."
+				</h3>
+				<h2>— Mason Cooley</h2>
+			</div>
+			<div class="book-grid"></div>
+		</main>
 
-        <div class="empty-grid-quote">
-            <h3>"Reading gives us someplace to go when<br>we have to stay where we are."</h3>
-            <h2> — Mason Cooley</h2>
-        </div>
-        <div class="book-grid">
-        </div>
-    </main>
+		<dialog class="add-book-modal">
+			<button class="close-btn">
+				<img class="icon" src="./assets/icons/close.svg" alt="close" />
+			</button>
+			<div class="dialog-content">
+				<h2 class="modal-title">
+					<span class="add-title">Add</span> Book
+				</h2>
+				<form novalidate>
+					<div class="form-control">
+						<label for="book-name-input">Book Name</label>
+						<input
+							required
+							type="text"
+							id="book-name-input"
+							placeholder="Some really cool book"
+						/>
+					</div>
+					<div class="form-control">
+						<label for="author-name-input">Author Name</label>
+						<input
+							required
+							type="text"
+							id="author-name-input"
+							placeholder="Nice person"
+						/>
+					</div>
+					<div class="form-control">
+						<label for="cover-url-input">Book Cover URL</label>
+						<input
+							type="url"
+							id="cover-url-input"
+							placeholder="https://www.example.com"
+						/>
+					</div>
+					<div class="form-control">
+						<label for="status-input">Status</label>
+						<select name="status" id="status-input">
+							<option value="Want to read">Want to read</option>
+							<option value="Reading">Reading</option>
+							<option value="Read">Read</option>
+						</select>
+					</div>
+					<div class="form-control">
+						<label for="genre-input">Genre</label>
+						<select name="genre" id="genre-input">
+							<option value="Self Help">Self Help</option>
+							<option value="Fantasy">Fantasy</option>
+							<option value="Mystery">Mystery</option>
+							<option value="Action">Action</option>
+							<option value="Philosophy">Philosophy</option>
+						</select>
+					</div>
+					<div class="form-control">
+						<label for="review-input">Review</label>
+						<textarea
+							required
+							name="review"
+							id="review-input"
+							placeholder="I really liked this book!"
+						></textarea>
+					</div>
+					<div class="rating-input">
+						<input type="radio" name="rating" value="1" />
+						<input type="radio" name="rating" value="2" />
+						<input type="radio" name="rating" value="3" />
+						<input type="radio" name="rating" value="4" />
+						<input type="radio" name="rating" value="5" />
+					</div>
+					<div class="form-control-btn">
+						<button class="cancel-btn">Cancel</button>
+						<button class="save-btn" type="submit">Save</button>
+					</div>
+				</form>
+			</div>
+		</dialog>
 
-    <dialog class="add-book-modal">
-        <button class="close-btn"><img class="icon" src="./assets/icons/close.svg" alt="close"></button>
-        <div class="dialog-content">
-            <h2 class="modal-title"><span class="add-title">Add</span> Book</h2>
-            <form>
-                <div class="form-control">
-                    <label for="book-name-input">Book Name</label>
-                    <input required type="text" id="book-name-input" placeholder="Some really cool book">
-                </div>
-                <div class="form-control">
-                    <label for="author-name-input">Author Name</label>
-                    <input required type="text" id="author-name-input" placeholder="Nice person">
-                </div>
-                <div class="form-control">
-                    <label for="cover-url-input">Book Cover URL</label>
-                    <input type="url" id="cover-url-input" placeholder="https://www.example.com">
-                </div>
-                <div class="form-control">
-                    <label for="status-input">Status</label>
-                    <select name="status" id="status-input">
-                        <option value="Want to read">Want to read</option>
-                        <option value="Reading">Reading</option>
-                        <option value="Read">Read</option>
-                    </select>
-                </div>
-                <div class="form-control">
-                    <label for="genre-input">Genre</label>
-                    <select name="genre" id="genre-input">
-                        <option value="Self Help">Self Help</option>
-                        <option value="Fantasy">Fantasy</option>
-                        <option value="Mystery">Mystery</option>
-                        <option value="Action">Action</option>
-                        <option value="Philosophy">Philosophy</option>
-                    </select>
-                </div>
-                <div class="form-control">
-                    <label for="review-input">Review</label>
-                    <textarea required name="review" id="review-input"
-                        placeholder="I really liked this book!"></textarea>
-                </div>
-                <div class="rating-input">
-                    <input type="radio" name="rating" value="1">
-                    <input type="radio" name="rating" value="2">
-                    <input type="radio" name="rating" value="3">
-                    <input type="radio" name="rating" value="4">
-                    <input type="radio" name="rating" value="5">
-                </div>
-                <div class="form-control-btn">
-                    <button class="cancel-btn">Cancel</button>
-                    <button class="save-btn" type="submit">Save</button>
-                </div>
-            </form>
-        </div>
-    </dialog>
+		<dialog class="book-details-modal">
+			<button class="close-btn">
+				<img class="icon" src="./assets/icons/close.svg" alt="close" />
+			</button>
+			<div class="details-dialog-content">
+				<div class="modal-cover"></div>
+				<div class="modal-utility">
+					<button class="bookmark-btn">
+						<img
+							src="./assets/icons/bookmark.svg"
+							class="icon"
+							alt="bookmark"
+						/>
+					</button>
+					<button class="edit-btn">
+						<img
+							src="./assets/icons/edit.svg"
+							class="icon"
+							alt="edit button"
+						/>
+					</button>
+					<button class="delete-btn">
+						<img
+							src="./assets/icons/delete.svg"
+							class="icon"
+							alt="edit button"
+						/>
+					</button>
+				</div>
+				<div class="book-info">
+					<h3 class="modal-title"></h3>
+					<p class="modal-author"></p>
+				</div>
+				<p class="modal-genre"></p>
+				<p class="modal-review"></p>
+				<div class="rating"></div>
+			</div>
+		</dialog>
 
-    <dialog class="book-details-modal">
-        <button class="close-btn"><img class="icon" src="./assets/icons/close.svg" alt="close"></button>
-        <div class="details-dialog-content">
-            <div class="modal-cover"></div>
-            <div class="modal-utility">
-                <button class="bookmark-btn"><img src="./assets/icons/bookmark.svg" class="icon"
-                        alt="bookmark"></button>
-                <button class="edit-btn"><img src="./assets/icons/edit.svg" class="icon" alt="edit button"></button>
-                <button class="delete-btn"><img src="./assets/icons/delete.svg" class="icon" alt="edit button"></button>
-            </div>
-            <div class="book-info">
-                <h3 class="modal-title"></h3>
-                <p class="modal-author"></p>
-            </div>
-            <p class="modal-genre"></p>
-            <p class="modal-review"></p>
-            <div class="rating">
-            </div>
-        </div>
-    </dialog>
-
-    <dialog class="confirm-modal">
-        <div class="confirm-modal-content">
-            <h3 class="modal-title">Are you sure you want to delete this book?</h3>
-            <div class="confirm-btns">
-                <button>No, I like this book!</button>
-                <button>Yes I'm sure</button>
-            </div>
-        </div>
-    </dialog>
-</body>
-
-
+		<dialog class="confirm-modal">
+			<div class="confirm-modal-content">
+				<h3 class="modal-title">
+					Are you sure you want to delete this book?
+				</h3>
+				<div class="confirm-btns">
+					<button>No, I like this book!</button>
+					<button>Yes I'm sure</button>
+				</div>
+			</div>
+		</dialog>
+	</body>
 </html>
