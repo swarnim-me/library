@@ -347,14 +347,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function checkFormValidity() {
 		if (nameInput.validity.valueMissing) {
-			nameInput.setCustomValidity("Please provide a name for the book");
+			nameInput.setCustomValidity("Please provide the name of the book");
 		} else {
 			nameInput.setCustomValidity("");
 		}
 
 		if (authorInput.validity.valueMissing) {
 			authorInput.setCustomValidity(
-				"Please provide a name of the author"
+				"Please provide the name of the author"
 			);
 		} else {
 			authorInput.setCustomValidity("");
@@ -362,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		if (reviewInput.validity.valueMissing) {
 			reviewInput.setCustomValidity(
-				"Please provide a simple review for the book"
+				"Please provide a simple review of the book"
 			);
 		} else {
 			reviewInput.setCustomValidity("");
